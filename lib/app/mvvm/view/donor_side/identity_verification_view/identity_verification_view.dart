@@ -15,6 +15,7 @@ import '../../../../config/app_assets.dart';
 import '../../../../config/app_colors.dart';
 import '../../../../config/app_routes.dart';
 import '../../../../config/app_text_style.dart';
+import '../../../../customWidgets/custom_snackbar/custom_snackbar.dart';
 
 class IdentityVerifyView extends StatefulWidget {
   const IdentityVerifyView({super.key});
@@ -213,6 +214,67 @@ class _IdentityVerifyViewState extends State<IdentityVerifyView> {
                           title: "Next",
                           bgColor: AppColors.secondary,
                           onPressed: () {
+                            final type = controller.imageType.value;
+
+                            if (type.isEmpty) {
+                              CustomSnackbar.show(
+                                iconData: Icons.warning_amber,
+                                textColor: AppColors.negativeRed,
+                                title: "Error",
+                                message: "",
+                                backgroundColor: AppColors.white,
+                                iconColor: AppColors.negativeRed,
+                                borderColor: AppColors.negativeRed,
+                                messageText: ["Please select an identity document type."],
+                              );
+                              return;
+                            }
+
+                            if (type == 'national') {
+                              if (controller.nationalIdFront.value == null || controller.nationalIdBack.value == null) {
+                                CustomSnackbar.show(
+                                  iconData: Icons.warning_amber,
+                                  textColor: AppColors.negativeRed,
+                                  title: "Error",
+                                  message: "",
+                                  backgroundColor: AppColors.white,
+                                  iconColor: AppColors.negativeRed,
+                                  borderColor: AppColors.negativeRed,
+                                  messageText: ["Please upload both front and back images of your National ID."],
+                                );
+                                return;
+                              }
+                            } else if (type == 'passport') {
+                              if (controller.passportImage.value == null) {
+                                CustomSnackbar.show(
+                                  iconData: Icons.warning_amber,
+                                  textColor: AppColors.negativeRed,
+                                  title: "Error",
+                                  message: "",
+                                  backgroundColor: AppColors.white,
+                                  iconColor: AppColors.negativeRed,
+                                  borderColor: AppColors.negativeRed,
+                                  messageText: ["Please upload your Passport image."],
+                                );
+                                return;
+                              }
+                            } else if (type == 'license') {
+                              if (controller.licenseImage.value == null) {
+                                CustomSnackbar.show(
+                                  iconData: Icons.warning_amber,
+                                  textColor: AppColors.negativeRed,
+                                  title: "Error",
+                                  message: "",
+                                  backgroundColor: AppColors.white,
+                                  iconColor: AppColors.negativeRed,
+                                  borderColor: AppColors.negativeRed,
+                                  messageText: ["Please upload your License image."],
+                                );
+                                return;
+                              }
+                            }
+                            controller.getIdentityImagesList();
+                            // ✅ All validations passed
                             Get.toNamed(AppRoutes.selfieVerificationView);
                           },
                         ).animate().fadeIn(duration: 700.ms).scale(begin: const Offset(0.9, 0.9)),

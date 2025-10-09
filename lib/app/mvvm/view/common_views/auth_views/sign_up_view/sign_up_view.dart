@@ -86,54 +86,55 @@ class _SignUpViewState extends State<SignUpView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              alignment: Alignment(0, 1.3),
-                              children: [
-                                Obx(() {
-                                  return Container(
-                                        height: 110.sp,
-                                        width: 110.sp,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: AppColors.white,
-                                          border: Border.all(color: AppColors.scaffoldBgColor, width: 2.sp),
-                                          image: DecorationImage(
-                                            image: authController.profilePicture.value == null
-                                                ? AssetImage(AppAssets.placeholderMan)
-                                                : FileImage(authController.profilePicture.value!),
-                                            fit: BoxFit.cover,
+                        if (GlobalVariables.userType == UserType.donor)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment(0, 1.3),
+                                children: [
+                                  Obx(() {
+                                    return Container(
+                                          height: 110.sp,
+                                          width: 110.sp,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors.white,
+                                            border: Border.all(color: AppColors.scaffoldBgColor, width: 2.sp),
+                                            image: DecorationImage(
+                                              image: authController.profilePicture.value == null
+                                                  ? AssetImage(AppAssets.placeholderMan)
+                                                  : FileImage(authController.profilePicture.value!),
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                      .animate()
-                                      .scale(begin: Offset(0.8, 0.8), end: Offset(1, 1), curve: Curves.easeOutBack, duration: 400.ms)
-                                      .fadeIn(duration: 300.ms);
-                                }),
+                                        )
+                                        .animate()
+                                        .scale(begin: Offset(0.8, 0.8), end: Offset(1, 1), curve: Curves.easeOutBack, duration: 400.ms)
+                                        .fadeIn(duration: 300.ms);
+                                  }),
 
-                                GestureDetector(
-                                  onTap: () {
-                                    Utils.showPickImageOptionsDialog(
-                                      context,
-                                      onCameraTap: () async {
-                                        Navigator.of(context).pop();
-                                        await authController.pickImageFromCamera(file: authController.profilePicture);
-                                      },
-                                      onGalleryTap: () async {
-                                        Navigator.of(context).pop();
-                                        await authController.pickImageFromGallery(file: authController.profilePicture);
-                                      },
-                                    );
-                                  },
-                                  child: SvgPicture.asset(AppAssets.cameraIcon, height: 25.h),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        30.h.height,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Utils.showPickImageOptionsDialog(
+                                        context,
+                                        onCameraTap: () async {
+                                          Navigator.of(context).pop();
+                                          await authController.pickImageFromCamera(file: authController.profilePicture);
+                                        },
+                                        onGalleryTap: () async {
+                                          Navigator.of(context).pop();
+                                          await authController.pickImageFromGallery(file: authController.profilePicture);
+                                        },
+                                      );
+                                    },
+                                    child: SvgPicture.asset(AppAssets.cameraIcon, height: 25.h),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        if (GlobalVariables.userType == UserType.donor) 30.h.height,
                         /* --- First & Last Name --- */
                         Row(
                           children: [

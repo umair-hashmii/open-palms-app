@@ -14,6 +14,7 @@ class SignUpController extends GetxController {
   Rx<File?> nationalIdBack = Rx<File?>(null);
   Rx<File?> passportImage = Rx<File?>(null);
   Rx<File?> licenseImage = Rx<File?>(null);
+  List<File>? identityImages;
   RxString imageType = ''.obs;
   RxBool isVisible = true.obs;
   RxBool isConfirmPasswordVisible = true.obs;
@@ -74,10 +75,42 @@ class SignUpController extends GetxController {
     );
   }
 
+  SignUpBodyModel createSignUpBodyModelForNeedy() {
+    return SignUpBodyModel(
+      password: passwordController.text,
+      email: emailController.text,
+      role: 'recipient',
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      profilePicture: profilePicture.value,
+      identityType: imageType.value == 'national'
+          ? 'national_id'
+          : imageType.value == 'passport'
+          ? 'passport'
+          : 'license',
+      identityImages: identityImages,
+    );
+  }
+
+  void getIdentityImagesList() {
+    switch (imageType.value) {
+      case 'national':
+        identityImages = [nationalIdFront.value ?? File('path'), nationalIdBack.value ?? File('path')];
+        break;
+      case 'passport':
+        identityImages = [passportImage.value ?? File('path')];
+        break;
+      case 'license':
+        identityImages = [licenseImage.value ?? File('path')];
+        break;
+      default:
+    }
+  }
+
   // --------------------- Signup API ---------------------
   Future<bool> signUp() async {
     try {
-      final signUpBodyModel = GlobalVariables.userType == UserType.donor ? createSignUpBodyModelForDonor() : createSignUpBodyModelForDonor();
+      final signUpBodyModel = GlobalVariables.userType == UserType.donor ? createSignUpBodyModelForDonor() : createSignUpBodyModelForNeedy();
       final apiResponse = await AuthRepository().signUpApi(signUpBodyModel);
       if (apiResponse.data != null) {
         LoggerService.i(apiResponse.message ?? 'Signup success');

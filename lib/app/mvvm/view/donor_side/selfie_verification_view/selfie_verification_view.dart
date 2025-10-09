@@ -1,15 +1,21 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:open_palms/app/customWidgets/sizedbox_extension.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/sign_up_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../config/app_assets.dart';
 import '../../../../config/app_colors.dart';
 import '../../../../config/app_routes.dart';
 import '../../../../config/app_text_style.dart';
+import '../../../../config/global_variables.dart';
+import '../../../../customWidgets/custom_loader.dart';
+import '../../../../customWidgets/custom_snackbar/custom_snackbar.dart';
 
 class SelfieVerificationView extends StatefulWidget {
   const SelfieVerificationView({super.key});
@@ -19,6 +25,7 @@ class SelfieVerificationView extends StatefulWidget {
 }
 
 class _SelfieVerificationViewState extends State<SelfieVerificationView> with WidgetsBindingObserver {
+  final SignUpController authController = Get.find();
   CameraController? _cameraController;
   List<CameraDescription>? _cameras;
   bool _isCameraInitialized = false;
@@ -99,21 +106,52 @@ class _SelfieVerificationViewState extends State<SelfieVerificationView> with Wi
           _isCapturing = true;
         });
 
-        final image = await _cameraController!.takePicture();
+        // Capture selfie
+        final XFile image = await _cameraController!.takePicture();
 
-        // Show success feedback
+        // ✅ Store directly in AuthController
+        authController.profilePicture.value = File(image.path);
+
         if (mounted) {
+          // ✅ Show success message
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(const SnackBar(content: Text('Selfie captured successfully!'), backgroundColor: Colors.green, duration: Duration(seconds: 2)));
-          // Get.toNamed(AppRoutes.kinDetailView);
+
+          // ✅ Call signup API
+          Get.dialog(CustomLoader(), barrierDismissible: false);
+          bool isSignUp = await authController.signUp();
+          Get.back();
+          if (isSignUp) {
+            CustomSnackbar.show(
+              iconData: Icons.check_circle,
+              title: "Success",
+              message: "",
+              textColor: AppColors.positiveGreen,
+              backgroundColor: AppColors.white,
+              iconColor: Colors.green,
+              borderColor: AppColors.positiveGreen,
+              messageText: ["User Registered Successfully. Now check your email for verification."],
+            );
+            Get.offAllNamed(AppRoutes.loginView);
+          } else {
+            CustomSnackbar.show(
+              iconData: Icons.warning_amber,
+              textColor: AppColors.negativeRed,
+              title: "Error",
+              message: "",
+              backgroundColor: AppColors.white,
+              iconColor: AppColors.negativeRed,
+              borderColor: AppColors.negativeRed,
+              messageText: GlobalVariables.errorMessages,
+            );
+          }
+
+          // ✅ Optionally navigate next after success
+          // Get.offAllNamed(AppRoutes.userSelectionView);
         }
 
-        // Handle the captured image here
-        print('Picture taken: ${image.path}');
-
-        // You can navigate to next screen or process the image
-        Get.offAllNamed(AppRoutes.userSelectionView);
+        print('📸 Picture stored at: ${image.path}');
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error taking picture: ${e.toString()}'), backgroundColor: Colors.red));
