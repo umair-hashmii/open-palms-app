@@ -271,7 +271,7 @@ class HttpsCalls {
         client,
         lControllerUrl,
         signUpBodyModel,
-        fileExtractors: {'profilePicture': () => signUpBodyModel.profilePicture, 'identityImages[]': () => signUpBodyModel.identityImages},
+        fileExtractors: {'profilePicture': () => signUpBodyModel.profilePicture, 'identityDocuments': () => signUpBodyModel.identityImages},
       ),
       cancelToken: cancelToken,
     );

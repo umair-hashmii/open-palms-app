@@ -33,7 +33,7 @@ class AppUser {
   String? updatedAt;
   String? createdAt;
   String? identityType;
-  String? identityPicture;
+  List<String>? identityPicture;
   String? passwordResetToken;
   String? passwordResetExpires;
   String? fcmToken;
@@ -80,7 +80,7 @@ class AppUser {
     updatedAt = json['updatedAt'];
     createdAt = json['createdAt'];
     identityType = json['identityType'];
-    identityPicture = json['identityPicture'];
+    identityPicture = json['identityPicture'] != null ? List<String>.from(json['identityPicture']) : [];
     passwordResetToken = json['passwordResetToken'];
     passwordResetExpires = json['passwordResetExpires'];
     fcmToken = json['fcmToken'];
