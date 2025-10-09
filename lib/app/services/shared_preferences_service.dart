@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../mvvm/model/api_reponse/login_resp_model.dart';
 import 'logger_service.dart';
 
 /// Service for managing local storage using SharedPreferences.
@@ -36,21 +37,21 @@ class SharedPreferencesService {
     return token;
   }
 
-  // Future<void> saveUserData(AppUser userData) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String data = json.encode(userData.toJson());
-  //   await prefs.setString(_keyUserData, data);
-  // }
-  //
-  // Future<AppUser?> readUserData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? data = prefs.getString(_keyUserData);
-  //   if (data != null) {
-  //     Map<String, dynamic> jsonData = json.decode(data);
-  //     return AppUser.fromJson(jsonData);
-  //   }
-  //   return null;
-  // }
+  Future<void> saveUserData(AppUser userData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String data = json.encode(userData.toJson());
+    await prefs.setString(_keyUserData, data);
+  }
+
+  Future<AppUser?> readUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString(_keyUserData);
+    if (data != null) {
+      Map<String, dynamic> jsonData = json.decode(data);
+      return AppUser.fromJson(jsonData);
+    }
+    return null;
+  }
 
   // static Future<void> saveLocaleLanguage(NinjaLangModel locale) async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -32,6 +32,7 @@ class AppAssets {
   static const String placeholderIcon = '$imagesPath/placeholder_icon.png';
   static const String liningBg = '$imagesPath/lining_bg.png';
   static const String addRequestIcon = '$imagesPath/add_request_icon.png';
+  static const String placeholderMan = '$imagesPath/placeholder_man.png';
 
   // Svgs Path
   static const String whiteBackButton = '$svgsPath/white_back_button.svg';

@@ -1,20 +1,25 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_palms/app/services/logger_service.dart';
+import '../../../model/body_model/sign_up_body_model.dart';
 
 class SignUpController extends GetxController {
   final ImagePicker picker = ImagePicker();
+  Rx<File?> profilePicture = Rx<File?>(null);
   Rx<File?> nationalIdFront = Rx<File?>(null);
   Rx<File?> nationalIdBack = Rx<File?>(null);
   Rx<File?> passportImage = Rx<File?>(null);
   Rx<File?> licenseImage = Rx<File?>(null);
   RxString imageType = ''.obs;
-
   RxBool isVisible = true.obs;
   RxBool isConfirmPasswordVisible = true.obs;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   void toggleConfirmPassword() {
     isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
@@ -23,9 +28,6 @@ class SignUpController extends GetxController {
   void togglePassword() {
     isVisible.value = !isVisible.value;
   }
-
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
 
   // --------------------- Image Picker ---------------------
   Future<bool> pickImageFromGallery({required Rx<File?> file}) async {
@@ -56,5 +58,17 @@ class SignUpController extends GetxController {
       LoggerService.e('Error picking image: $e');
       return false;
     }
+  }
+
+  // --------------------- SignUp Body ---------------------
+  SignUpBodyModel createSignUpBodyModelForDonor() {
+    return SignUpBodyModel(
+      password: passwordController.text,
+      email: emailController.text,
+      role: 'donor',
+      firstName: firstNameController.text,
+      lastName: lastNameController.text,
+      profilePicture: profilePicture.value,
+    );
   }
 }

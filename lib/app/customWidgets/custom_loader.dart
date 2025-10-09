@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,7 +14,7 @@ class CustomLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoActivityIndicator(color: AppColors.secondary, radius: 20.sp);
+    return Center(child: CircularProgressIndicator(color: AppColors.primary));
     // return SizedBox(
     //   child: Center(
     //     child: Lottie.asset(AppAssets.loaderAnimation, height: height ?? 160.sp, width: width ?? 160.sp),

@@ -17,7 +17,9 @@ import 'package:open_palms/app/mvvm/view/need_people_side/create_request_view/cr
 import 'package:open_palms/app/mvvm/view/need_people_side/need_people_home_view/need_people_home_view.dart';
 import 'package:open_palms/app/mvvm/view/need_people_side/needy_request_detail_view/needy_request_detail_view.dart';
 import 'package:open_palms/app/mvvm/view/need_people_side/needy_request_history_view/needy_request_history_view.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/login_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/sign_up_controller.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/splash_controller/splash_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_home_controller/donor_home_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_request_detail_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/needy_side_controllers/create_request_controller.dart';
@@ -63,7 +65,7 @@ abstract class AppPages {
       name: AppRoutes.splashView,
       page: () => SplashView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<SplashController>(() => SplashController());
       }),
     ),
     GetPage(
@@ -84,14 +86,14 @@ abstract class AppPages {
       name: AppRoutes.loginView,
       page: () => LoginView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<LoginController>(() => LoginController());
       }),
     ),
     GetPage(
       name: AppRoutes.signUpView,
       page: () => SignUpView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<SignUpController>(() => SignUpController());
       }),
     ),
     GetPage(

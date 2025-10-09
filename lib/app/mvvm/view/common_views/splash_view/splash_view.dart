@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:open_palms/app/config/app_assets.dart';
 import 'package:open_palms/app/config/padding_extensions.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/splash_controller/splash_controller.dart';
 
 import '../../../../config/app_routes.dart';
 
@@ -16,10 +17,12 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final SplashController controller = Get.find();
+
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
-      Get.offNamed(AppRoutes.getStartedView);
+      controller.checkUserData(context);
     });
     super.initState();
   }
