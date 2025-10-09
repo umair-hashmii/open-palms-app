@@ -1,19 +1,14 @@
 import 'package:get/get.dart';
+
 import '../../../../repository/auth_repo/auth_repo.dart';
 import '../../../../services/logger_service.dart';
 import '../../../../services/shared_preferences_service.dart';
 import '../../../model/api_reponse/api_response.dart';
 import '../../../model/api_reponse/login_resp_model.dart';
 
-class DonorHomeController extends GetxController {
+class ProfileController extends GetxController {
   RxBool isUserLoading = false.obs;
   AppUser? user;
-  RxString selectedCategory = 'All'.obs;
-  final List<String> categoryList = ["All", "Medical", "Education", "Business", "Community"];
-
-  void selectCategory(val) {
-    selectedCategory.value = val;
-  }
 
   fncReadSp() async {
     isUserLoading.value = true;

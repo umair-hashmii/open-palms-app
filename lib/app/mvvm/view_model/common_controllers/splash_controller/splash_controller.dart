@@ -20,7 +20,7 @@ class SplashController extends GetxController {
       } else {
         log(userData?.toJson().toString() ?? 'No user data found');
         LoggerService.i('User email: ${userData!.email}');
-        if (userData!.role == 'user') {
+        if (userData!.role == 'donor') {
           GlobalVariables.userType = UserType.donor;
           Get.offNamed(AppRoutes.donorBottomBarView);
         } else {

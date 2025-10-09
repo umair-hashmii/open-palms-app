@@ -90,20 +90,20 @@ class AuthRepository {
   //     rethrow;
   //   }
   // }
-  //
-  // Future<ApiResponse<void>> forgotPasswordApi(String email) async {
-  //   try {
-  //     final data = {'email': email};
-  //     String jsonString = json.encode(data);
-  //     String? endPoint = AppUrls.forgotPassword;
-  //     final response = await HttpsCalls().postApiHits(endPoint, utf8.encode(jsonString));
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
-  //
+
+  Future<ApiResponse<void>> forgotPasswordApi(String email) async {
+    try {
+      final data = {'email': email};
+      String jsonString = json.encode(data);
+      String? endPoint = AppUrls.forgotPassword;
+      final response = await HttpsCalls().postApiHits(endPoint, utf8.encode(jsonString));
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
+
   // Future<ApiResponse<void>> logoutApi() async {
   //   try {
   //     String? endPoint = AppUrls.logout;
@@ -114,21 +114,21 @@ class AuthRepository {
   //     rethrow;
   //   }
   // }
-  //
-  // Future<ApiResponse<GetUserProfileResp>> getUserByID(int id) async {
-  //   LoggerService.i('Fetching user data for ID: $id');
-  //   try {
-  //     final body = {'user_id': id};
-  //     String jsonString = json.encode(body);
-  //     String? endPoint = AppUrls.getUser;
-  //     final response = await HttpsCalls().getApiHits(endPoint);
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) => GetUserProfileResp.fromJson(dataJson));
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
-  //
+
+  Future<ApiResponse<AppUser>> getUserByID(String id) async {
+    LoggerService.i('Fetching user data for ID: $id');
+    try {
+      final body = {'user_id': id};
+      String jsonString = json.encode(body);
+      String? endPoint = AppUrls.getProfile;
+      final response = await HttpsCalls().getApiHits(endPoint);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) => AppUser.fromJson(dataJson));
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
+
   // Future<ApiResponse<GetSettingsResp>> getSettings() async {
   //   try {
   //     String? endPoint = AppUrls.getAboutUs;

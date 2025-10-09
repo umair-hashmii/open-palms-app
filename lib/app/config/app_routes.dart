@@ -17,7 +17,9 @@ import 'package:open_palms/app/mvvm/view/need_people_side/create_request_view/cr
 import 'package:open_palms/app/mvvm/view/need_people_side/need_people_home_view/need_people_home_view.dart';
 import 'package:open_palms/app/mvvm/view/need_people_side/needy_request_detail_view/needy_request_detail_view.dart';
 import 'package:open_palms/app/mvvm/view/need_people_side/needy_request_history_view/needy_request_history_view.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/forgot_password_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/login_controller.dart';
+import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/profile_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/sign_up_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/splash_controller/splash_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_home_controller/donor_home_controller.dart';
@@ -100,7 +102,7 @@ abstract class AppPages {
       name: AppRoutes.forgotPasswordView,
       page: () => ForgotPasswordView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
       }),
     ),
     GetPage(
@@ -172,6 +174,7 @@ abstract class AppPages {
       binding: BindingsBuilder(() {
         Get.lazyPut<BottomBarController>(() => BottomBarController());
         Get.lazyPut<DonorHomeController>(() => DonorHomeController());
+        Get.lazyPut<ProfileController>(() => ProfileController());
       }),
     ),
     GetPage(
@@ -199,7 +202,7 @@ abstract class AppPages {
       name: AppRoutes.donorProfileView,
       page: () => DonorProfileView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<NeedyRequestDetailController>(() => NeedyRequestDetailController());
+        Get.lazyPut<ProfileController>(() => ProfileController());
       }),
     ),
     GetPage(

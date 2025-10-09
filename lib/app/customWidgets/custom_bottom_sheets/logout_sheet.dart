@@ -10,14 +10,11 @@ import 'package:open_palms/app/customWidgets/sizedbox_extension.dart';
 import '../../config/app_colors.dart';
 import '../app_custom_button.dart';
 
-class LogoutSheet extends StatefulWidget {
-  const LogoutSheet({super.key});
+class LogoutSheet extends StatelessWidget {
+  final VoidCallback? onLogoutTap;
 
-  @override
-  State<LogoutSheet> createState() => _LogoutSheetState();
-}
+  const LogoutSheet({super.key, this.onLogoutTap});
 
-class _LogoutSheetState extends State<LogoutSheet> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,12 +50,7 @@ class _LogoutSheetState extends State<LogoutSheet> {
           Divider(color: Color(0xffD5D9E2)).paddingHorizontal(10.w),
           13.h.height,
 
-          AppCustomButton(
-            title: 'Yes',
-            onPressed: () {
-              Get.offAllNamed(AppRoutes.userSelectionView);
-            },
-          ).paddingHorizontal(50.w),
+          AppCustomButton(title: 'Yes', onPressed: onLogoutTap ?? () {}).paddingHorizontal(50.w),
           15.h.height,
         ],
       ).paddingHorizontal(15.w),

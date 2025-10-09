@@ -9,4 +9,6 @@ abstract class AppUrls {
   // Auth Apis
   static const String signUp = '/auth/register';
   static const String login = '/auth/login';
+  static const String getProfile = '/auth/profile';
+  static const String forgotPassword = '/auth/forgot-password';
 }
