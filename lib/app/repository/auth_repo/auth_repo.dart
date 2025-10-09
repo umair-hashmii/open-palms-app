@@ -3,6 +3,7 @@ import '../../config/app_urls.dart';
 import '../../mvvm/model/api_reponse/api_response.dart';
 import '../../mvvm/model/api_reponse/login_resp_model.dart';
 import '../../mvvm/model/body_model/login_body_model.dart';
+import '../../mvvm/model/body_model/sign_up_body_model.dart';
 import '../../services/api_response_handler.dart';
 import '../../services/https_calls.dart';
 import '../../services/logger_service.dart';
@@ -11,18 +12,18 @@ import 'package:http/http.dart' as http;
 class AuthRepository {
   final HttpsCalls _httpsCalls = HttpsCalls();
 
-  // Future<ApiResponse<LoginResponseModel>> signUpApi(SignUpBodyModel signUpBodyModel) async {
-  //   try {
-  //     final endPoint = AppUrls.signUp;
-  //     LoggerService.d('Initiating driver signup API call');
-  //     final response = await _httpsCalls.signUpMultiPart(endPoint, signUpBodyModel);
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) => LoginResponseModel.fromJson(dataJson));
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
-  //
+  Future<ApiResponse<LoginResponseModel>> signUpApi(SignUpBodyModel signUpBodyModel) async {
+    try {
+      final endPoint = AppUrls.signUp;
+      LoggerService.d('Initiating driver signup API call');
+      final response = await _httpsCalls.signUpMultiPart(endPoint, signUpBodyModel);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) => LoginResponseModel.fromJson(dataJson));
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
+
   // Future<ApiResponse<LoginResponseModel>> updateProfileApi(SignUpBodyModel signUpBodyModel) async {
   //   try {
   //     final endPoint = AppUrls.updateProfile;

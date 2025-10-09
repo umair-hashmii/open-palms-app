@@ -15,6 +15,8 @@ import '../../../../../config/app_text_style.dart';
 import '../../../../../config/utils.dart';
 import '../../../../../customWidgets/app_custom_button.dart';
 import '../../../../../customWidgets/app_custom_field.dart';
+import '../../../../../customWidgets/custom_loader.dart';
+import '../../../../../customWidgets/custom_snackbar/custom_snackbar.dart';
 import '../../../../view_model/common_controllers/auth_controllers/sign_up_controller.dart';
 
 class SignUpView extends StatefulWidget {
@@ -246,13 +248,39 @@ class _SignUpViewState extends State<SignUpView> {
                           child: AppCustomButton(
                             title: 'Sign Up',
                             bgColor: AppColors.secondary,
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // if (GlobalVariables.userType == UserType.donor) {
-                                //   Get.offAllNamed(AppRoutes.loginView);
-                                // } else if (GlobalVariables.userType == UserType.needy) {
-                                //   Get.toNamed(AppRoutes.identityVerificationView);
-                                // }
+                                if (GlobalVariables.userType == UserType.donor) {
+                                  Get.dialog(CustomLoader(), barrierDismissible: false);
+                                  bool isSignUp = await authController.signUp();
+                                  Get.back();
+                                  if (isSignUp) {
+                                    CustomSnackbar.show(
+                                      iconData: Icons.check_circle,
+                                      title: "Success",
+                                      message: "",
+                                      textColor: AppColors.positiveGreen,
+                                      backgroundColor: AppColors.white,
+                                      iconColor: Colors.green,
+                                      borderColor: AppColors.positiveGreen,
+                                      messageText: ["User Registered Successfully. Now check your email for verification."],
+                                    );
+                                    Get.offAllNamed(AppRoutes.loginView);
+                                  } else {
+                                    CustomSnackbar.show(
+                                      iconData: Icons.warning_amber,
+                                      textColor: AppColors.negativeRed,
+                                      title: "Error",
+                                      message: "",
+                                      backgroundColor: AppColors.white,
+                                      iconColor: AppColors.negativeRed,
+                                      borderColor: AppColors.negativeRed,
+                                      messageText: GlobalVariables.errorMessages,
+                                    );
+                                  }
+                                } else if (GlobalVariables.userType == UserType.needy) {
+                                  Get.toNamed(AppRoutes.identityVerificationView);
+                                }
                               }
                             },
                           ).animate().fadeIn(duration: 600.ms, delay: 700.ms).scale(begin: const Offset(0.9, 0.9)),

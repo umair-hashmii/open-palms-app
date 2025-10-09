@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_palms/app/services/logger_service.dart';
+import '../../../../config/global_variables.dart';
+import '../../../../repository/auth_repo/auth_repo.dart';
 import '../../../model/body_model/sign_up_body_model.dart';
 
 class SignUpController extends GetxController {
@@ -70,5 +72,40 @@ class SignUpController extends GetxController {
       lastName: lastNameController.text,
       profilePicture: profilePicture.value,
     );
+  }
+
+  // --------------------- Signup API ---------------------
+  Future<bool> signUp() async {
+    try {
+      final signUpBodyModel = GlobalVariables.userType == UserType.donor ? createSignUpBodyModelForDonor() : createSignUpBodyModelForDonor();
+      final apiResponse = await AuthRepository().signUpApi(signUpBodyModel);
+      if (apiResponse.data != null) {
+        LoggerService.i(apiResponse.message ?? 'Signup success');
+        clearData();
+        return true;
+      } else {
+        LoggerService.w('Signup response is null');
+        return false;
+      }
+    } catch (e, stack) {
+      LoggerService.e('Error during signup: $e', error: e, stackTrace: stack);
+      return false;
+    }
+  }
+
+  void clearData() {
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    firstNameController.clear();
+    lastNameController.clear();
+    profilePicture.value = null;
+    nationalIdFront.value = null;
+    nationalIdBack.value = null;
+    passportImage.value = null;
+    licenseImage.value = null;
+    imageType.value = '';
+    isVisible.value = true;
+    isConfirmPasswordVisible.value = true;
   }
 }
