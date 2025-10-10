@@ -58,7 +58,6 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
             ),
 
             20.h.height,
-
             /* --- Email --- */
             AppCustomField(
               labelTitle: 'Email Address',
@@ -68,8 +67,9 @@ class _EditProfileSheetState extends State<EditProfileSheet> {
               controller: controller.emailController,
             ),
             30.h.height,
+            AppCustomButton(title: 'Update Profile', onPressed: () {
 
-            AppCustomButton(title: 'Update Profile', onPressed: () {}).paddingHorizontal(50.w),
+            }).paddingHorizontal(50.w),
             10.h.height,
           ],
         ).paddingHorizontal(15.w),
