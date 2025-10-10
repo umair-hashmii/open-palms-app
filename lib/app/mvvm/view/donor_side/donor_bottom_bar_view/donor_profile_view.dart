@@ -104,14 +104,11 @@ class _DonorProfileViewState extends State<DonorProfileView> {
                                 ),
                               ],
                             ),
-
                             20.h.height,
-
                             SizedBox(
                               width: double.infinity,
                               child: SvgPicture.asset(AppAssets.dividerIc, fit: BoxFit.fitWidth),
                             ),
-
                             15.h.height,
                             if (GlobalVariables.userType == UserType.needy) ...[
                               Text('Total Received', style: AppTextStyles.customText14(color: Colors.white.withOpacity(0.6))),

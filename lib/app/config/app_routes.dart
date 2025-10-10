@@ -25,6 +25,7 @@ import 'package:open_palms/app/mvvm/view_model/common_controllers/splash_control
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_home_controller/donor_home_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_request_detail_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/needy_side_controllers/create_request_controller.dart';
+import 'package:open_palms/app/mvvm/view_model/needy_side_controllers/needy_home_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/needy_side_controllers/needy_request_detail_controller.dart';
 
 import '../mvvm/view/common_views/splash_view/splash_view.dart';
@@ -181,7 +182,7 @@ abstract class AppPages {
       name: AppRoutes.needyHomeView,
       page: () => NeedPeopleHomeView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<BottomBarController>(() => BottomBarController());
+        Get.lazyPut<NeedyHomeController>(() => NeedyHomeController());
       }),
     ),
     GetPage(
@@ -195,7 +196,7 @@ abstract class AppPages {
       name: AppRoutes.needyRequestHistoryView,
       page: () => NeedyRequestHistoryView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<NeedyRequestDetailController>(() => NeedyRequestDetailController());
+        Get.lazyPut<NeedyHomeController>(() => NeedyHomeController());
       }),
     ),
     GetPage(

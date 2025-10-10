@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../../repository/auth_repo/auth_repo.dart';
@@ -9,6 +10,9 @@ import '../../../model/api_reponse/login_resp_model.dart';
 class ProfileController extends GetxController {
   RxBool isUserLoading = false.obs;
   AppUser? user;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   fncReadSp() async {
     isUserLoading.value = true;
@@ -22,6 +26,9 @@ class ProfileController extends GetxController {
       ApiResponse<AppUser> apiResponse = await AuthRepository().getUserByID(user?.id ?? '0');
       if (apiResponse.success != null && apiResponse.success!) {
         user = apiResponse.data;
+        firstNameController.text = user?.firstName ?? '';
+        lastNameController.text = user?.lastName ?? '';
+        emailController.text = user?.email ?? '';
         await SharedPreferencesService().saveUserData(user!);
         return true;
       } else {

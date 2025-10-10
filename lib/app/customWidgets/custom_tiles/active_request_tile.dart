@@ -120,7 +120,7 @@ class ActiveRequestTile extends StatelessWidget {
                       style: AppTextStyles.customText12(color: Colors.black, fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      "$supporters supporters",
+                      "${supporters ?? 0} supporters",
                       style: AppTextStyles.customText12(color: Colors.black, fontWeight: FontWeight.w400),
                     ),
                   ],

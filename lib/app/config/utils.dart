@@ -16,6 +16,28 @@ class Utils {
     return formatter.format(date ?? DateTime.now());
   }
 
+  static String formatBackendDate(String isoDateString) {
+    try {
+      final dateTime = DateTime.parse(isoDateString).toLocal(); // Convert from UTC to local
+      final formattedDate = DateFormat('dd MMM yyyy').format(dateTime);
+      return formattedDate;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  static int getDaysRemaining(String endDateString) {
+    try {
+      final endDate = DateTime.parse(endDateString).toLocal();
+      final now = DateTime.now();
+
+      final difference = endDate.difference(now).inDays;
+      return difference > 0 ? difference : 0; // return 0 if expired
+    } catch (e) {
+      return 0;
+    }
+  }
+
   static calculateAge(DateTime birthDate) {
     DateTime today = DateTime.now();
     int age = today.year - birthDate.year;

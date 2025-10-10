@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart'; // ⬅️ for pooled IOClient + per-request cancel
+import 'package:open_palms/app/mvvm/model/body_model/create_donation_request_body_model.dart';
 import '../config/app_urls.dart';
 import '../config/global_variables.dart';
 import '../mvvm/model/body_model/sign_up_body_model.dart';
@@ -272,6 +273,23 @@ class HttpsCalls {
         lControllerUrl,
         signUpBodyModel,
         fileExtractors: {'profilePicture': () => signUpBodyModel.profilePicture, 'identityDocuments': () => signUpBodyModel.identityImages},
+      ),
+      cancelToken: cancelToken,
+    );
+  }
+
+  Future<http.Response> createDonationRequestMultiPart(
+    String lControllerUrl,
+    CreateDonationRequestBodyModel createDonationRequestBodyModel, {
+    CancelToken? cancelToken,
+  }) {
+    return _performRequest(
+      lControllerUrl,
+      (client) => _genericMultipartRequest(
+        client,
+        lControllerUrl,
+        createDonationRequestBodyModel,
+        fileExtractors: {'images': () => createDonationRequestBodyModel.images},
       ),
       cancelToken: cancelToken,
     );

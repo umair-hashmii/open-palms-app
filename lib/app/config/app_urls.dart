@@ -6,9 +6,15 @@ abstract class AppUrls {
 
   // static const String notificationsBaseApi = "https://fcm.googleapis.com/v1/projects/ninjacar-3cb70/messages:send";
 
-  // Auth Apis
+  /// Auth Apis
   static const String signUp = '/auth/register';
   static const String login = '/auth/login';
   static const String getProfile = '/auth/profile';
   static const String forgotPassword = '/auth/forgot-password';
+
+  /// Donor Side
+
+  /// Needy Side
+  static const String createDonationRequest = "/requests";
+  static const String getMyRequests = "/requests/my/requests";
 }
