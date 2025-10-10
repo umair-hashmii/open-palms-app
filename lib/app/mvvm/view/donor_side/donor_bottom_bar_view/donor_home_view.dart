@@ -29,6 +29,7 @@ class _DonorHomeViewState extends State<DonorHomeView> {
   @override
   void initState() {
     controller.fetchUserData();
+    controller.fetchActiveRequest();
     super.initState();
   }
 
@@ -129,7 +130,10 @@ class _DonorHomeViewState extends State<DonorHomeView> {
                                 itemBuilder: (context, index) {
                                   final category = controller.categoryList[index];
                                   return GestureDetector(
-                                    onTap: () => controller.selectCategory(category),
+                                    onTap: () async {
+                                      controller.selectCategory(category);
+                                      await controller.fetchActiveRequest();
+                                    },
                                     child: Obx(() {
                                       return Container(
                                         decoration: BoxDecoration(
@@ -156,27 +160,59 @@ class _DonorHomeViewState extends State<DonorHomeView> {
                             15.h.height,
 
                             // Requests List
-                            ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: 2,
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return RequestCustomTile(
-                                  onTap: () {
-                                    Get.toNamed(AppRoutes.donorRequestDetailView, arguments: {'status': 'active'});
-                                  },
-                                  title: "Emergency Medical Surgery",
-                                  image: "https://images.pexels.com/photos/8078574/pexels-photo-8078574.jpeg",
-                                  collectedAmount: "18750",
-                                  priority: "High",
-                                  description:
-                                      "Help Sarah with urgent medical expenses for her heart surgery. She needs immediate support to cover hospital bills and post-operative care. Sarah is a single mother of two who has been battling heart disease for the past year.",
-                                  supporters: '235',
-                                  totalAmount: "25000",
-                                ).paddingBottom(10.h).animate().fadeIn(duration: 600.ms, delay: (200 * index).ms).slideY(begin: 0.15, end: 0);
-                              },
-                            ),
+                            Obx(() {
+                              return controller.isActiveRequestLoading.value
+                                  ? Center(child: CustomLoader()).paddingTop(110.h)
+                                  : controller.activeRequests.isEmpty
+                                  ? Center(
+                                      child: Column(
+                                        children: [
+                                          80.h.height,
+                                          Icon(Icons.info_outline_rounded, color: AppColors.negativeRed, size: 30.sp),
+                                          8.h.height,
+                                          Text(
+                                            'No Requests Found!',
+                                            style: AppTextStyles.customText20(color: Colors.black, fontWeight: FontWeight.w500),
+                                          ),
+                                          8.h.height,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await controller.fetchActiveRequest();
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.refresh, color: AppColors.primary, size: 15.sp),
+                                                5.w.width,
+                                                Text('Tap here to Refresh', style: AppTextStyles.customText14(color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: controller.activeRequests.length,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        final item = controller.activeRequests[index];
+                                        return RequestCustomTile(
+                                          onTap: () {
+                                            Get.toNamed(AppRoutes.donorRequestDetailView, arguments: {'requestId': item.id});
+                                          },
+                                          title: item.title,
+                                          image: item.images?[0],
+                                          collectedAmount: item.currentAmount.toString(),
+                                          priority: item.priority,
+                                          description: item.description,
+                                          supporters: "500",
+                                          totalAmount: item.targetAmount.toString(),
+                                        ).paddingBottom(10.h).animate().fadeIn(duration: 600.ms, delay: (200 * index).ms).slideY(begin: 0.15, end: 0);
+                                      },
+                                    );
+                            }),
                           ],
                         ),
                       ),

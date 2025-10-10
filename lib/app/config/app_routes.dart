@@ -22,6 +22,7 @@ import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controlle
 import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/profile_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/auth_controllers/sign_up_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/common_controllers/splash_controller/splash_controller.dart';
+import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_history_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_home_controller/donor_home_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/donor_side_controllers/donor_request_detail_controller.dart';
 import 'package:open_palms/app/mvvm/view_model/needy_side_controllers/create_request_controller.dart';
@@ -176,6 +177,7 @@ abstract class AppPages {
         Get.lazyPut<BottomBarController>(() => BottomBarController());
         Get.lazyPut<DonorHomeController>(() => DonorHomeController());
         Get.lazyPut<ProfileController>(() => ProfileController());
+        Get.lazyPut<DonorHistoryController>(() => DonorHistoryController());
       }),
     ),
     GetPage(

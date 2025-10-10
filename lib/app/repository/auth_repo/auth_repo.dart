@@ -24,36 +24,33 @@ class AuthRepository {
     }
   }
 
-  // Future<ApiResponse<LoginResponseModel>> updateProfileApi(SignUpBodyModel signUpBodyModel) async {
-  //   try {
-  //     final endPoint = AppUrls.updateProfile;
-  //     LoggerService.d('Initiating profile update API call');
-  //     final isOnlyIsNotifySet =
-  //         (signUpBodyModel.email == null &&
-  //         signUpBodyModel.password == null &&
-  //         signUpBodyModel.passwordConfirmation == null &&
-  //         signUpBodyModel.name == null &&
-  //         signUpBodyModel.role == null &&
-  //         signUpBodyModel.profilePicture == null &&
-  //         signUpBodyModel.phone == null);
-  //
-  //     final http.Response response;
-  //
-  //     if (isOnlyIsNotifySet) {
-  //       LoggerService.i("Using simple JSON API for isNotify only");
-  //       final jsonString = json.encode(signUpBodyModel.toJson());
-  //       response = await _httpsCalls.postApiHits(endPoint, utf8.encode(jsonString));
-  //     } else {
-  //       LoggerService.i("Using multipart API for full profile update");
-  //       response = await _httpsCalls.signUpMultiPart(endPoint, signUpBodyModel);
-  //     }
-  //
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) => LoginResponseModel.fromJson(dataJson));
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
+  Future<ApiResponse<LoginResponseModel>> updateProfileApi(SignUpBodyModel signUpBodyModel) async {
+    try {
+      final endPoint = AppUrls.updateProfile;
+      LoggerService.d('Initiating profile update API call');
+      final isOnlyIsNotifySet =
+          (signUpBodyModel.email == null &&
+          signUpBodyModel.password == null &&
+          signUpBodyModel.identityImages == null &&
+          signUpBodyModel.firstName == null &&
+          signUpBodyModel.role == null &&
+          signUpBodyModel.profilePicture == null &&
+          signUpBodyModel.lastName == null);
+      final http.Response response;
+      if (isOnlyIsNotifySet) {
+        LoggerService.i("Using simple JSON API for isNotify only");
+        final jsonString = json.encode(signUpBodyModel.toJson());
+        response = await _httpsCalls.postApiHits(endPoint, utf8.encode(jsonString));
+      } else {
+        LoggerService.i("Using multipart API for full profile update");
+        response = await _httpsCalls.signUpMultiPart(endPoint, signUpBodyModel);
+      }
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) => LoginResponseModel.fromJson(dataJson));
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
 
   Future<ApiResponse<LoginResponseModel>> loginApi(LoginBodyModel loginBodyModel) async {
     try {

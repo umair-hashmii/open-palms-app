@@ -10,6 +10,7 @@ abstract class AppUrls {
   static const String signUp = '/auth/register';
   static const String login = '/auth/login';
   static const String getProfile = '/auth/profile';
+  static const String updateProfile = '/auth/profile';
   static const String forgotPassword = '/auth/forgot-password';
 
   /// Donor Side
