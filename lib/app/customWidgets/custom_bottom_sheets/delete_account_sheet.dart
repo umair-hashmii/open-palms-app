@@ -12,7 +12,9 @@ import '../../mvvm/view_model/donor_side_controllers/delete_account_controller/d
 import '../app_custom_button.dart';
 
 class DeleteAccountSheet extends StatefulWidget {
-  const DeleteAccountSheet({super.key});
+  final VoidCallback? onDeleteTap;
+
+  const DeleteAccountSheet({super.key, this.onDeleteTap});
 
   @override
   State<DeleteAccountSheet> createState() => _DeleteAccountSheetState();
@@ -70,7 +72,7 @@ class _DeleteAccountSheetState extends State<DeleteAccountSheet> {
               ),
             ),
             20.h.height,
-            AppCustomButton(title: 'Delete Account', onPressed: () {}).paddingHorizontal(50.w),
+            AppCustomButton(title: 'Delete Account', onPressed: widget.onDeleteTap ?? () {}).paddingHorizontal(50.w),
             20.h.height,
           ],
         ).paddingHorizontal(15.w),

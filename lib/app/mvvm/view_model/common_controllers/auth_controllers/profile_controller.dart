@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:open_palms/app/mvvm/model/api_reponse/settings_resp_model.dart';
 
 import '../../../../repository/auth_repo/auth_repo.dart';
 import '../../../../services/logger_service.dart';
@@ -10,7 +11,9 @@ import '../../../model/body_model/sign_up_body_model.dart';
 
 class ProfileController extends GetxController {
   RxBool isUserLoading = false.obs;
+  RxBool isSettingsLoading = false.obs;
   AppUser? user;
+  GetSettingsResp? settings;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -41,6 +44,54 @@ class ProfileController extends GetxController {
     } finally {
       isUserLoading.value = false;
     }
+  }
+
+  Future<bool> fetchSettings(String key) async {
+    isSettingsLoading.value = true;
+    try {
+      ApiResponse<GetSettingsResp> apiResponse = key == 'about_us' ? await AuthRepository().getAboutUs() : await AuthRepository().getPrivacyPolicy();
+      if (apiResponse.success != null && apiResponse.success!) {
+        settings = apiResponse.data;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, stack) {
+      LoggerService.e('Error during fetching user data: $e', error: e, stackTrace: stack);
+      return false;
+    } finally {
+      isSettingsLoading.value = false;
+    }
+  }
+
+  Future<bool> logoutApi() async {
+    try {
+      ApiResponse<void> apiResponse = await AuthRepository().logoutApi();
+      if (apiResponse.success != null && apiResponse.success!) {
+        SharedPreferencesService().clearAllPreferences();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, stack) {
+      LoggerService.e('Error during fetching user data: $e', error: e, stackTrace: stack);
+      return false;
+    } finally {}
+  }
+
+  Future<bool> deleteAccountApi() async {
+    try {
+      ApiResponse<void> apiResponse = await AuthRepository().deleteUserApi();
+      if (apiResponse.success != null && apiResponse.success!) {
+        SharedPreferencesService().clearAllPreferences();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, stack) {
+      LoggerService.e('Error during fetching user data: $e', error: e, stackTrace: stack);
+      return false;
+    } finally {}
   }
 
   SignUpBodyModel createSignUpBodyModel() {

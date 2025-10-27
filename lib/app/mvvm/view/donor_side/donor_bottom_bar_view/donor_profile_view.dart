@@ -292,9 +292,13 @@ class _DonorProfileViewState extends State<DonorProfileView> {
           Utils.showBottomSheet(
             context: context,
             child: LogoutSheet(
-              onLogoutTap: () {
-                SharedPreferencesService().clearAllPreferences();
-                Get.offAllNamed(AppRoutes.userSelectionView);
+              onLogoutTap: () async {
+                Get.dialog(CustomLoader(), barrierDismissible: false);
+                bool isLogout = await controller.logoutApi();
+                Get.back();
+                if (isLogout) {
+                  Get.offAllNamed(AppRoutes.userSelectionView);
+                } else {}
               },
             ),
           );
@@ -306,7 +310,19 @@ class _DonorProfileViewState extends State<DonorProfileView> {
         titleColor: Colors.red,
         trailing: const SizedBox(),
         onTap: () {
-          Utils.showBottomSheet(context: context, child: DeleteAccountSheet());
+          Utils.showBottomSheet(
+            context: context,
+            child: DeleteAccountSheet(
+              onDeleteTap: () async {
+                Get.dialog(CustomLoader(), barrierDismissible: false);
+                bool isLogout = await controller.deleteAccountApi();
+                Get.back();
+                if (isLogout) {
+                  Get.offAllNamed(AppRoutes.userSelectionView);
+                } else {}
+              },
+            ),
+          );
         },
       ),
     ];

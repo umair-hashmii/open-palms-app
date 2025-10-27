@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:open_palms/app/mvvm/model/api_reponse/settings_resp_model.dart';
+
 import '../../config/app_urls.dart';
 import '../../mvvm/model/api_reponse/api_response.dart';
 import '../../mvvm/model/api_reponse/login_resp_model.dart';
@@ -64,17 +66,30 @@ class AuthRepository {
     }
   }
 
-  // Future<ApiResponse<GetCategoriesRespModel>> getAllCategories() async {
-  //   try {
-  //     final endPoint = AppUrls.getAllCategories;
-  //     LoggerService.d('Initiating API call');
-  //     final response = await _httpsCalls.getApiHits(endPoint);
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) => GetCategoriesRespModel.fromJson(dataJson));
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
+  Future<ApiResponse<GetSettingsResp>> getAboutUs() async {
+    try {
+      final endPoint = AppUrls.getAboutUs;
+      LoggerService.d('Initiating API call');
+      final response = await _httpsCalls.getApiHits(endPoint);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) => GetSettingsResp.fromJson(dataJson));
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
+
+  Future<ApiResponse<GetSettingsResp>> getPrivacyPolicy() async {
+    try {
+      final endPoint = AppUrls.getPrivacyPolicy;
+      LoggerService.d('Initiating API call');
+      final response = await _httpsCalls.getApiHits(endPoint);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) => GetSettingsResp.fromJson(dataJson));
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
+
   //
   // Future<ApiResponse<GetWalletResp>> getWallet() async {
   //   try {
@@ -101,16 +116,16 @@ class AuthRepository {
     }
   }
 
-  // Future<ApiResponse<void>> logoutApi() async {
-  //   try {
-  //     String? endPoint = AppUrls.logout;
-  //     final response = await HttpsCalls().getApiHits(endPoint);
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
+  Future<ApiResponse<void>> logoutApi() async {
+    try {
+      String? endPoint = AppUrls.logout;
+      final response = await HttpsCalls().getApiHits(endPoint);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
 
   Future<ApiResponse<AppUser>> getUserByID(String id) async {
     LoggerService.i('Fetching user data for ID: $id');
@@ -126,27 +141,14 @@ class AuthRepository {
     }
   }
 
-  // Future<ApiResponse<GetSettingsResp>> getSettings() async {
-  //   try {
-  //     String? endPoint = AppUrls.getAboutUs;
-  //     final response = await HttpsCalls().getApiHits(endPoint);
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) => GetSettingsResp.fromJson(dataJson));
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
-  //
-  // Future<ApiResponse<void>> deleteUserApi(String? password) async {
-  //   try {
-  //     final Map<String, dynamic> requestBody = {'password': password};
-  //     String jsonString = json.encode(requestBody);
-  //     String? endPoint = AppUrls.deleteAccount;
-  //     final response = await HttpsCalls().postApiHits(endPoint, utf8.encode(jsonString));
-  //     return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
-  //   } catch (e, stackTrace) {
-  //     ApiResponseHandler.logUnhandledError(e, stackTrace);
-  //     rethrow;
-  //   }
-  // }
+  Future<ApiResponse<void>> deleteUserApi() async {
+    try {
+      String? endPoint = AppUrls.deleteAccount;
+      final response = await HttpsCalls().getApiHits(endPoint);
+      return await ApiResponseHandler.process(response, endPoint, (dataJson) {});
+    } catch (e, stackTrace) {
+      ApiResponseHandler.logUnhandledError(e, stackTrace);
+      rethrow;
+    }
+  }
 }

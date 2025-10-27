@@ -12,6 +12,12 @@ abstract class AppUrls {
   static const String getProfile = '/auth/profile';
   static const String updateProfile = '/auth/profile';
   static const String forgotPassword = '/auth/forgot-password';
+  static const String logout = '/auth/logout';
+  static const String deleteAccount = '/auth/deactivate-account';
+
+  /// Settings Api
+  static const String getAboutUs = '/settings/about_us';
+  static const String getPrivacyPolicy = '/settings/privacy_policy';
 
   /// Donor Side
 

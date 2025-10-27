@@ -132,14 +132,14 @@ abstract class AppPages {
       name: AppRoutes.aboutUsView,
       page: () => AboutUsView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<ProfileController>(() => ProfileController());
       }),
     ),
     GetPage(
       name: AppRoutes.privacyPolicyView,
       page: () => PrivacyPolicyView(),
       binding: BindingsBuilder(() {
-        // Get.lazyPut<SplashController>(() => SplashController());
+        Get.lazyPut<ProfileController>(() => ProfileController());
       }),
     ),
     GetPage(
