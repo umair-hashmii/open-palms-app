@@ -21,122 +21,180 @@ class LoginResponseModel {
 
 class AppUser {
   String? id;
-  bool? emailVerified;
-  bool? identityVerified;
-  bool? stripeOnboardingComplete;
   String? firstName;
   String? lastName;
   String? email;
-  String? role;
-  String? profilePicture;
-  String? emailVerificationExpires;
-  String? updatedAt;
-  String? createdAt;
   String? identityType;
   List<String>? identityPicture;
+  String? profilePicture;
+  bool? emailVerified;
+  String? emailVerificationToken;
+  String? emailVerificationExpires;
   String? passwordResetToken;
   String? passwordResetExpires;
+  bool? identityVerified;
+  String? identityVerificationStatus;
+  String? identityRejectionReason;
   String? fcmToken;
+  String? role;
   String? stripeCustomerId;
   String? stripeAccountId;
-  String? emailVerificationToken;
+  bool? stripeOnboardingComplete;
+  bool? isBlocked;
+  bool? isDeactivated;
+  String? reactivationToken;
+  String? reactivationTokenExpires;
+  String? createdAt;
+  String? updatedAt;
   UserStatistics? statistics;
+  StripeStatus? stripeStatus;
 
   AppUser({
     this.id,
-    this.emailVerified,
-    this.identityVerified,
-    this.stripeOnboardingComplete,
     this.firstName,
     this.lastName,
     this.email,
-    this.role,
-    this.profilePicture,
-    this.emailVerificationExpires,
-    this.updatedAt,
-    this.createdAt,
     this.identityType,
     this.identityPicture,
+    this.profilePicture,
+    this.emailVerified,
+    this.emailVerificationToken,
+    this.emailVerificationExpires,
     this.passwordResetToken,
     this.passwordResetExpires,
+    this.identityVerified,
+    this.identityVerificationStatus,
+    this.identityRejectionReason,
     this.fcmToken,
+    this.role,
     this.stripeCustomerId,
     this.stripeAccountId,
-    this.emailVerificationToken,
+    this.stripeOnboardingComplete,
+    this.isBlocked,
+    this.isDeactivated,
+    this.reactivationToken,
+    this.reactivationTokenExpires,
+    this.createdAt,
+    this.updatedAt,
     this.statistics,
+    this.stripeStatus,
   });
 
   AppUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    emailVerified = json['emailVerified'];
-    identityVerified = json['identityVerified'];
-    stripeOnboardingComplete = json['stripeOnboardingComplete'];
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
-    role = json['role'];
-    profilePicture = json['profilePicture'];
-    emailVerificationExpires = json['emailVerificationExpires'];
-    updatedAt = json['updatedAt'];
-    createdAt = json['createdAt'];
     identityType = json['identityType'];
     identityPicture = json['identityPicture'] != null ? List<String>.from(json['identityPicture']) : [];
+    profilePicture = json['profilePicture'];
+    emailVerified = json['emailVerified'];
+    emailVerificationToken = json['emailVerificationToken'];
+    emailVerificationExpires = json['emailVerificationExpires'];
     passwordResetToken = json['passwordResetToken'];
     passwordResetExpires = json['passwordResetExpires'];
+    identityVerified = json['identityVerified'];
+    identityVerificationStatus = json['identityVerificationStatus'];
+    identityRejectionReason = json['identityRejectionReason'];
     fcmToken = json['fcmToken'];
+    role = json['role'];
     stripeCustomerId = json['stripeCustomerId'];
     stripeAccountId = json['stripeAccountId'];
-    emailVerificationToken = json['emailVerificationToken'];
+    stripeOnboardingComplete = json['stripeOnboardingComplete'];
+    isBlocked = json['isBlocked'];
+    isDeactivated = json['isDeactivated'];
+    reactivationToken = json['reactivationToken'];
+    reactivationTokenExpires = json['reactivationTokenExpires'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
     statistics = json['statistics'] != null ? UserStatistics.fromJson(json['statistics']) : null;
+    stripeStatus = json['stripeStatus'] != null ? StripeStatus.fromJson(json['stripeStatus']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['id'] = id;
-    data['emailVerified'] = emailVerified;
-    data['identityVerified'] = identityVerified;
-    data['stripeOnboardingComplete'] = stripeOnboardingComplete;
     data['firstName'] = firstName;
     data['lastName'] = lastName;
     data['email'] = email;
-    data['role'] = role;
-    data['profilePicture'] = profilePicture;
-    data['emailVerificationExpires'] = emailVerificationExpires;
-    data['updatedAt'] = updatedAt;
-    data['createdAt'] = createdAt;
     data['identityType'] = identityType;
     data['identityPicture'] = identityPicture;
+    data['profilePicture'] = profilePicture;
+    data['emailVerified'] = emailVerified;
+    data['emailVerificationToken'] = emailVerificationToken;
+    data['emailVerificationExpires'] = emailVerificationExpires;
     data['passwordResetToken'] = passwordResetToken;
     data['passwordResetExpires'] = passwordResetExpires;
+    data['identityVerified'] = identityVerified;
+    data['identityVerificationStatus'] = identityVerificationStatus;
+    data['identityRejectionReason'] = identityRejectionReason;
     data['fcmToken'] = fcmToken;
+    data['role'] = role;
     data['stripeCustomerId'] = stripeCustomerId;
     data['stripeAccountId'] = stripeAccountId;
-    data['emailVerificationToken'] = emailVerificationToken;
+    data['stripeOnboardingComplete'] = stripeOnboardingComplete;
+    data['isBlocked'] = isBlocked;
+    data['isDeactivated'] = isDeactivated;
+    data['reactivationToken'] = reactivationToken;
+    data['reactivationTokenExpires'] = reactivationTokenExpires;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     if (statistics != null) {
       data['statistics'] = statistics!.toJson();
+    }
+    if (stripeStatus != null) {
+      data['stripeStatus'] = stripeStatus!.toJson();
     }
     return data;
   }
 }
 
 class UserStatistics {
-  int? totalDonated;
-  int? donationCount;
-  dynamic currentSubscription;
+  int? totalReceived;
+  int? totalWithdrawn;
+  int? availableBalance;
+  int? requestCount;
+  int? completedRequests;
 
-  UserStatistics({this.totalDonated, this.donationCount, this.currentSubscription});
+  UserStatistics({this.totalReceived, this.totalWithdrawn, this.availableBalance, this.requestCount, this.completedRequests});
 
   UserStatistics.fromJson(Map<String, dynamic> json) {
-    totalDonated = json['totalDonated'];
-    donationCount = json['donationCount'];
-    currentSubscription = json['currentSubscription'];
+    totalReceived = json['totalReceived'];
+    totalWithdrawn = json['totalWithdrawn'];
+    availableBalance = json['availableBalance'];
+    requestCount = json['requestCount'];
+    completedRequests = json['completedRequests'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['totalDonated'] = totalDonated;
-    data['donationCount'] = donationCount;
-    data['currentSubscription'] = currentSubscription;
+    data['totalReceived'] = totalReceived;
+    data['totalWithdrawn'] = totalWithdrawn;
+    data['availableBalance'] = availableBalance;
+    data['requestCount'] = requestCount;
+    data['completedRequests'] = completedRequests;
+    return data;
+  }
+}
+
+class StripeStatus {
+  bool? hasAccount;
+  bool? onboardingComplete;
+  String? accountId;
+
+  StripeStatus({this.hasAccount, this.onboardingComplete, this.accountId});
+
+  StripeStatus.fromJson(Map<String, dynamic> json) {
+    hasAccount = json['hasAccount'];
+    onboardingComplete = json['onboardingComplete'];
+    accountId = json['accountId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['hasAccount'] = hasAccount;
+    data['onboardingComplete'] = onboardingComplete;
+    data['accountId'] = accountId;
     return data;
   }
 }

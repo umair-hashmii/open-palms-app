@@ -7,6 +7,7 @@ import 'package:open_palms/app/config/app_colors.dart';
 import 'package:open_palms/app/config/app_strings.dart';
 import 'package:open_palms/app/config/global_variables.dart';
 import 'package:open_palms/app/config/padding_extensions.dart';
+import 'package:open_palms/app/customWidgets/app_custom_button.dart';
 import 'package:open_palms/app/customWidgets/custom_app_bar.dart';
 import 'package:open_palms/app/customWidgets/custom_bottom_sheets/delete_account_sheet.dart';
 import 'package:open_palms/app/customWidgets/custom_bottom_sheets/edit_profile_sheet.dart';
@@ -131,7 +132,7 @@ class _DonorProfileViewState extends State<DonorProfileView> {
                                             style: AppTextStyles.customText16(color: AppColors.white.withOpacity(0.9), fontWeight: FontWeight.w500),
                                           ),
                                           Text(
-                                            '\$${controller.user?.statistics?.totalDonated}',
+                                            '\$${controller.user?.statistics?.totalReceived}',
                                             style: AppTextStyles.customText28(color: AppColors.white, fontWeight: FontWeight.w600),
                                           ),
                                         ],
@@ -224,6 +225,9 @@ class _DonorProfileViewState extends State<DonorProfileView> {
                         ),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [..._animatedSettingsTiles(context)]),
                       ),
+                      30.h.height,
+                      if (GlobalVariables.userType == UserType.needy && controller.user?.stripeStatus?.onboardingComplete == false)
+                        AppCustomButton(title: 'Setup Express Account', onPressed: () {}, bgColor: Colors.blue).paddingHorizontal(20.w),
                     ],
                   ),
                 ),

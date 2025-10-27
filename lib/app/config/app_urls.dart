@@ -19,6 +19,9 @@ abstract class AppUrls {
   static const String getAboutUs = '/settings/about_us';
   static const String getPrivacyPolicy = '/settings/privacy_policy';
 
+  /// Stripe
+  static const String createExpressAccount = "/stripe/initialize-onboarding";
+
   /// Donor Side
 
   /// Needy Side
